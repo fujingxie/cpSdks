@@ -1,14 +1,13 @@
 package fourg.data;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-public class FieldStrengthData  {
+public class FieldStrengthData {
 
     private long currentTimeMillis;
-    private String  imsi;
+    private String imsi;
     private int fieldstrength;
-    public FieldStrengthData(){}
+
+    public FieldStrengthData() {
+    }
 
     public long getCurrentTimeMillis() {
         return currentTimeMillis;
@@ -23,15 +22,15 @@ public class FieldStrengthData  {
     }
 
     public void setTime(long currentTimeMillis) {
-        this.currentTimeMillis=currentTimeMillis;
+        this.currentTimeMillis = currentTimeMillis;
     }
 
     public void setImsi(String imsi) {
-        this.imsi=imsi;
+        this.imsi = imsi;
     }
 
     public void setFieldstrength(int fieldstrength) {
-        this.fieldstrength=fieldstrength;
+        this.fieldstrength = fieldstrength;
     }
 
     @Override

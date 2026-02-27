@@ -23,10 +23,6 @@ public enum GzsjSdkManager {
 
     public GzsjSDK sdk;
 
-    public static void main(String[] args) {
-        System.err.println("hello world");
-    }
-
     public void init() throws IOException {
 
         sdk = new GzsjSDK();

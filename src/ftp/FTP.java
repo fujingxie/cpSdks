@@ -1,5 +1,4 @@
-package ftp;;
-
+package ftp;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
@@ -62,6 +61,7 @@ public class FTP {
      * FTP列表.
      */
     private List<FTPFile> list;
+
     public FTP() {
         this.hostName = "117.50.55.253";
         this.serverPort = 21;
@@ -78,21 +78,21 @@ public class FTP {
     public void setFtpClient(FTPClient ftpClient) {
         this.ftpClient = ftpClient;
     }
-// -------------------------------------------------------文件上传方法------------------------------------------------
+    // -------------------------------------------------------文件上传方法------------------------------------------------
 
     /**
      * 上传单个文件.
      *
      * @param singleFile
-     *            本地文件
+     *                   本地文件
      * @param remotePath
-     *            FTP目录
+     *                   FTP目录
      * @param listener
-     *            监听器
+     *                   监听器
      * @throws IOException
      */
     public void uploadSingleFile(File singleFile, String remotePath,
-                                 UploadProgressListener listener) throws IOException {
+            UploadProgressListener listener) throws IOException {
 
         // 上传之前初始化
         this.uploadBeforeOperate(remotePath, listener);
@@ -115,15 +115,15 @@ public class FTP {
      * 上传多个文件.
      *
      * @param fileList
-     *            本地文件
+     *                   本地文件
      * @param remotePath
-     *            FTP目录
+     *                   FTP目录
      * @param listener
-     *            监听器
+     *                   监听器
      * @throws IOException
      */
     public void uploadMultiFile(LinkedList<File> fileList, String remotePath,
-                                UploadProgressListener listener) throws IOException {
+            UploadProgressListener listener) throws IOException {
 
         // 上传之前初始化
         this.uploadBeforeOperate(remotePath, listener);
@@ -149,12 +149,12 @@ public class FTP {
      * 上传单个文件.
      *
      * @param localFile
-     *            本地文件
+     *                  本地文件
      * @return true上传成功, false上传失败
      * @throws IOException
      */
     private boolean uploadingSingle(File localFile,
-                                    UploadProgressListener listener) throws IOException {
+            UploadProgressListener listener) throws IOException {
         boolean flag = true;
         // 不带进度的方式
         // // 创建输入流
@@ -179,13 +179,13 @@ public class FTP {
      * 上传文件之前初始化相关参数
      *
      * @param remotePath
-     *            FTP目录
+     *                   FTP目录
      * @param listener
-     *            监听器
+     *                   监听器
      * @throws IOException
      */
     private void uploadBeforeOperate(String remotePath,
-                                     UploadProgressListener listener) throws IOException {
+            UploadProgressListener listener) throws IOException {
 
         // 打开FTP服务
         try {
@@ -207,11 +207,12 @@ public class FTP {
         // 上传单个文件
 
     }
+
     /**
      * 列出FTP下所有文件.
      *
      * @param remotePath
-     *            服务器目录
+     *                   服务器目录
      * @return FTPFile集合
      * @throws IOException
      */
@@ -220,7 +221,7 @@ public class FTP {
             // 获取文件
             try {
                 FTPFile[] files = ftpClient.listFiles(remotePath);
-                System.out.println("files size "+files.length);
+                System.out.println("files size " + files.length);
                 if (files != null && files.length > 0) {
                     // 遍历并且添加到集合
                     for (FTPFile file : files) {
@@ -228,11 +229,12 @@ public class FTP {
                     }
                 }
             } catch (Exception e) {
-//                Log.e("TAG", "请稍等...");
+                // Log.e("TAG", "请稍等...");
             }
         }
         return list;
     }
+
     /**
      * 上传完成之后关闭连接
      *
@@ -251,16 +253,17 @@ public class FTP {
      * 下载单个文件，可实现断点下载.
      *
      * @param serverPath
-     *            Ftp目录及文件路径
+     *                   Ftp目录及文件路径
      * @param localPath
-     *            本地目录
+     *                   本地目录
      * @param fileName
-     *            下载之后的文件名称
+     *                   下载之后的文件名称
      * @param listener
-     *            监听器
+     *                   监听器
      * @throws IOException
      */
-    public void downloadSingleFile(String serverPath, String localPath, String fileName, DownLoadProgressListener listener)
+    public void downloadSingleFile(String serverPath, String localPath, String fileName,
+            DownLoadProgressListener listener)
             throws Exception {
 
         // 打开FTP服务
@@ -280,7 +283,7 @@ public class FTP {
             return;
         }
 
-        //创建本地文件夹
+        // 创建本地文件夹
         File mkFile = new File(localPath);
         if (!mkFile.exists()) {
             mkFile.mkdirs();
@@ -314,7 +317,7 @@ public class FTP {
             currentSize = currentSize + length;
             if (currentSize / step != process) {
                 process = currentSize / step;
-                if (process % 5 == 0) {  //每隔%5的进度返回一次
+                if (process % 5 == 0) { // 每隔%5的进度返回一次
                     listener.onDownLoadProgress(FTP_DOWN_LOADING, process, null);
                 }
             }
@@ -343,9 +346,9 @@ public class FTP {
      * 删除Ftp下的文件.
      *
      * @param serverPath
-     *            Ftp目录及文件路径
+     *                   Ftp目录及文件路径
      * @param listener
-     *            监听器
+     *                   监听器
      * @throws IOException
      */
     public void deleteSingleFile(String serverPath, DeleteFileProgressListener listener)
@@ -368,7 +371,7 @@ public class FTP {
             return;
         }
 
-        //进行删除操作
+        // 进行删除操作
         boolean flag = true;
         flag = ftpClient.deleteFile(serverPath);
         if (flag) {
@@ -405,11 +408,11 @@ public class FTP {
             throw new IOException("connect fail: " + reply);
         }
         // 登录到服务器
-        boolean login_flag=ftpClient.login(userName, password);
-        System.out.println("login_flag "+login_flag);
+        boolean login_flag = ftpClient.login(userName, password);
+        System.out.println("login_flag " + login_flag);
         // 获取响应值
         reply = ftpClient.getReplyCode();
-        System.out.println("reply "+reply);
+        System.out.println("reply " + reply);
         if (!FTPReply.isPositiveCompletion(reply)) {
             // 断开连接
             ftpClient.disconnect();
